@@ -89,4 +89,4 @@ channel.on("op", ({ op, revision, client_id }) => { ... })
 4. Cursor tracking — broadcast cursor positions
 
 ## Demo
-[Loom recording link — paste here]
+[[Loom recording link — paste here]](https://www.loom.com/share/d07b9a41625742d78fd28242f4121a4a)
