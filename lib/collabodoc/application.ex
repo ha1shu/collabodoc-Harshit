@@ -8,14 +8,13 @@ defmodule Collabodoc.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      CollabodocWeb.Telemetry,
-      {DNSCluster, query: Application.get_env(:collabodoc, :dns_cluster_query) || :ignore},
-      {Phoenix.PubSub, name: Collabodoc.PubSub},
-      # Start a worker by calling: Collabodoc.Worker.start_link(arg)
-      # {Collabodoc.Worker, arg},
-      # Start to serve requests, typically the last entry
-      CollabodocWeb.Endpoint
-    ]
+  CollabodocWeb.Telemetry,
+  {DNSCluster, query: Application.get_env(:collabodoc, :dns_cluster_query) || :ignore},
+  {Registry, keys: :unique, name: Collabodoc.DocumentRegistry},
+  {DynamicSupervisor, name: Collabodoc.DocumentSupervisor, strategy: :one_for_one},
+  {Phoenix.PubSub, name: Collabodoc.PubSub},
+  CollabodocWeb.Endpoint
+]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
